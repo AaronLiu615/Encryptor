@@ -99,22 +99,24 @@ public class Encryptor
   public String encryptMessage(String message)
   {
     /* to be implemented in part (c) */
-    /* String newStr = "";
+    String newStr = "";
     String temp = message;
+
     while(temp.length() > 0) {
-      String Str4use = "";
+      String subString = "";
       if (temp.length() > numCols * numRows) {
-        Str4use = temp.substring(0, numRows * numCols);
+        subString = temp.substring(0, numRows * numCols);
         temp = temp.substring(numCols * numRows);
       }
       else{
-        Str4use = temp;
+        subString = temp;
         temp = "";
       }
-      fillBlock(Str4use);
+      fillBlock(subString);
       newStr += encryptBlock();
     }
-    return newStr; */
+    return newStr;
+
   }
   
   /**  Decrypts an encrypted message. All filler 'A's that may have been
@@ -142,6 +144,35 @@ public class Encryptor
   public String decryptMessage(String encryptedMessage)
   {
     /* to be implemented in part (d) */
-    return "";
+    int index = 0;
+    String tempMessage = encryptedMessage;
+    String message = "";
+
+    while (index < encryptedMessage.length()){
+        for (int col = 0; col < letterBlock[0].length; col++ ){
+          for (int row = 0; row < letterBlock.length; row++){
+            if (index < encryptedMessage.length() ){
+              letterBlock[row][col] = encryptedMessage.substring(index, index + 1);
+            }
+            index++;
+          }
+        }
+        for (String[] s : letterBlock){
+          for (String l : s){
+            message += l;
+          }
+        }
+      }
+
+      String prev = "";
+
+      for (int i = 1 ; i < message.length(); i++){
+        prev = message.substring(i - 1, i );
+        if (prev.equals("A") && message.charAt(i) == 'A'){
+          message = message.substring(0, i - 1);
+        }
+      }
+
+    return message;
   }
 }
